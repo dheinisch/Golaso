@@ -3,13 +3,34 @@ import { Platform, StatusBar } from "react-native";
 import { StackNavigator, TabNavigator } from "react-navigation";
 import SignUp from "../screens/Registration/SignUpScreen";
 import SignIn from "../screens/Registration/SignInScreen";
-import Home from "../screens/HomeScreen";
+import Groups from "../screens/GroupsScreen";
 import Profile from "../screens/ProfileScreen";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import HomeScreen from "../screens/HomeScreen";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import NewGroupScreen from "../screens/NewGroupScreen";
+import MainHeader from "../components/MainHeader";
 
 const headerStyle = {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
 };
+
+export const GameNav = TabNavigator(
+    {
+        Home: {
+            screen: HomeScreen,
+            navigationOptions: {
+                tabBarLabel: "Groups",
+            }
+        },
+    },
+    {
+        tabBarOptions: {
+            style: {
+                paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+            }
+        }
+    }
+);
 
 export const SignedOut = StackNavigator({
     SignIn: {
@@ -28,28 +49,35 @@ export const SignedOut = StackNavigator({
     }
 });
 
-export const SignedIn = TabNavigator(
+export const SignedIn = StackNavigator(
     {
-        Home: {
-            screen: Home,
-            navigationOptions: {
-                tabBarLabel: "Home",
-            }
+        Groups: {
+            screen: Groups,
+            navigationOptions: ({navigation}) => ({
+                header: <MainHeader navigation = {navigation} />
+            })
         },
         Profile: {
             screen: Profile,
             navigationOptions: {
-                tabBarLabel: "Profile",
+                title: "Profile",
+                headerStyle
             }
+        },
+        NewGroup: {
+            screen: NewGroupScreen,
+            navigationOptions: ({navigation}) => ({
+                header: <MainHeader navigation = {navigation} />
+            })
+        },
+        Game: {
+            screen: GameNav,
+            navigationOptions: ({navigation}) => ({
+                header: <MainHeader navigation = {navigation} />
+            })
+
         }
     },
-    {
-        tabBarOptions: {
-            style: {
-                paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
-            }
-        }
-    }
 );
 
 export const createRootNavigator = (signedIn = false) => {

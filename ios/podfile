@@ -8,9 +8,14 @@ target 'Golaso' do
   # Pods for Golaso
   pod ‘Firebase/Core’
   pod ‘Firebase/Auth’
+  pod ‘Firebase/Database’
 
   pod 'react-native-fcm', :path => '../node_modules/react-native-fcm'
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'react-native-icons', :path => '../node_modules/react-native-icons'
+
+  pod 'react-native-contacts', :path => '../node_modules/react-native-contacts'
 
 end

@@ -3,6 +3,8 @@ package com.golaso;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.rt2zz.reactnativecontacts.ReactNativeContacts;
+import com.smixx.reactnativeicons.ReactNativeIcons;
 import com.oblador.vectoricons.VectorIconsPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
@@ -26,6 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeContacts(),
+            new ReactNativeIcons(),
             new VectorIconsPackage(),
             new RNFirebasePackage(),
             new FIRMessagingPackage()
