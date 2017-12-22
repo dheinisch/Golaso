@@ -49,8 +49,7 @@ export default class NewGroupScreen extends React.Component {
                     placeholder='Type Here...' />
                 {this.renderSelected()}
                 {this.state.dataSource &&
-                <View style={{marginTop: 5}}>
-                    <View style={styles.contentContainer}>
+                    <View style={{marginTop: 5}}>
                         <ListView
                             initialListSize={5}
                             enableEmptySections={true}
@@ -59,7 +58,6 @@ export default class NewGroupScreen extends React.Component {
                                 return this.renderGroupRow(contact)
                             }}/>
                     </View>
-                </View>
                 }
             </View>
         )

@@ -3,6 +3,7 @@ import {Image, Text, TouchableOpacity, View, ListView} from "react-native";
 import firebase from 'react-native-firebase';
 import styles from '../components/Styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const trophyImage = require('../assets/images/world-cup.png');
@@ -40,32 +41,40 @@ export default class GroupsScreen extends React.Component {
 
     render() {
         return (
-            <View>
-                <View style={styles.linksRow}>
-                    <TouchableOpacity activeOpacity={.5} onPress={() => {
-                        this.props.navigation.navigate("NewGroup")
-                    }}>
-                        <Text style={styles.linkText}>New Group</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={.5} onPress={() => {
-                        this.props.navigation.navigate("NewGroup");
-                    }}>
-                        <Text style={styles.linkText}>Join Group</Text>
-                    </TouchableOpacity>
+            <View style={styles.mainContainer}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.leftHeaderContainer}>
+                        <Text style={styles.logoText}>Golaso</Text>
+                    </View>
+                    <View style={styles.rightHeaderContainer}>
+                        <MaterialIcon name="search" color='#fff' size={23} style={{padding:5}} />
+                        <MaterialIcon name="person" color='#fff' size={23} style={{padding:5}}
+                                      onPress={() => this.props.navigation.navigate("Profile")}/>
+                    </View>
                 </View>
-                {this.state.groups &&
-                    <View style={{ marginTop: 5 }}>
-                        <View style={styles.contentContainer}>
+                <View style={styles.contentContainer}>
+                    <View style={styles.linksRow}>
+                        <TouchableOpacity activeOpacity={.5} onPress={() => {
+                            this.props.navigation.navigate("NewGroup")
+                        }}>
+                            <Text style={styles.linkText}>New Group</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity activeOpacity={.5} onPress={() => {
+                            this.props.navigation.navigate("NewGroup");
+                        }}>
+                            <Text style={styles.linkText}>Join Group</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {this.state.groups &&
+                        <View style={{ marginTop: 5 }}>
                             <ListView
                                 initialListSize={5}
                                 enableEmptySections={true}
                                 dataSource={this.state.groups}
-                                renderRow={(group) => {
-                                    return this.renderGroupRow(group)
-                                }}/>
+                                renderRow={(group) => {return this.renderGroupRow(group)}}/>
                         </View>
+                    }
                     </View>
-                }
             </View>
         )
     }

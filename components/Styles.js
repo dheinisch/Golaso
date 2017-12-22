@@ -8,7 +8,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'space-between',
         borderBottomColor: "rgba(92,94,94,0.5)",
         borderBottomWidth: 0.25,
-        padding: 15
+        padding: 8
     },
     linkText: {
         color: "#0000ff",
@@ -18,6 +18,32 @@ export default styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F5FCFF',
         height: 24
+    },
+    headerContainer: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "#7ED321",
+        alignItems:"center",
+        paddingRight: 5
+    },
+    leftHeaderContainer: {
+        alignItems: "flex-start",
+        flexDirection: "row"
+    },
+    rightHeaderContainer: {
+        alignItems: "flex-end",
+        flexDirection: "row"
+    },
+    contentContainer: {
+        flex: 6,
+    },
+    logoText: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 16,
+        alignItems: "flex-start",
+        marginLeft: 10
     },
     listItemContainer: {
         flex: 1,

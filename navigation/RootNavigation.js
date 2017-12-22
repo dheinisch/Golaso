@@ -6,10 +6,8 @@ import SignIn from "../screens/Registration/SignInScreen";
 import Groups from "../screens/GroupsScreen";
 import Profile from "../screens/ProfileScreen";
 import HomeScreen from "../screens/HomeScreen";
-import Icon from 'react-native-vector-icons/FontAwesome';
 import NewGroupDetailsScreen from "../screens/NewGroup/NewGroupDetailsScreen";
 import NewGroupMembersScreen from "../screens/NewGroup/NewGroupMembersScreen";
-import MainHeader from "../components/MainHeader";
 
 const headerStyle = {
     marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -35,21 +33,17 @@ export const GameNav = TabNavigator(
 
 export const NewGroupNav = StackNavigator({
     // TODO change the order after implementing next button like back button
-    GroupDetails: {
-        screen: NewGroupDetailsScreen,
-        navigationOptions: {
-            title: "Group Details",
-            headerStyle
+        GroupDetails: {
+            screen: NewGroupDetailsScreen,
+        },
+        GroupMembers: {
+            screen: NewGroupMembersScreen,
         }
     },
-    GroupMembers: {
-        screen: NewGroupMembersScreen,
-        navigationOptions: {
-            title: "Add Members",
-            headerStyle
-        }
+    {
+        headerMode: "none"
     }
-});
+);
 
 export const SignedOut = StackNavigator({
     SignIn: {
@@ -72,31 +66,29 @@ export const SignedIn = StackNavigator(
     {
         Groups: {
             screen: Groups,
-            navigationOptions: ({navigation}) => ({
-                header: <MainHeader navigation = {navigation} />
-            })
+            navigationOptions: {
+            }
         },
         Profile: {
             screen: Profile,
             navigationOptions: {
-                title: "Profile",
-                headerStyle
             }
         },
         NewGroup: {
             screen: NewGroupNav,
             navigationOptions: {
-                header: null,
             }
         },
         Game: {
             screen: GameNav,
-            navigationOptions: ({navigation}) => ({
-                header: <MainHeader navigation = {navigation} />
-            })
+            navigationOptions: {
+            }
 
         }
     },
+    {
+        headerMode: "none"
+    }
 );
 
 export const createRootNavigator = (signedIn = false) => {
