@@ -7,7 +7,8 @@ import Groups from "../screens/GroupsScreen";
 import Profile from "../screens/ProfileScreen";
 import HomeScreen from "../screens/HomeScreen";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import NewGroupScreen from "../screens/NewGroupScreen";
+import NewGroupDetailsScreen from "../screens/NewGroup/NewGroupDetailsScreen";
+import NewGroupMembersScreen from "../screens/NewGroup/NewGroupMembersScreen";
 import MainHeader from "../components/MainHeader";
 
 const headerStyle = {
@@ -31,6 +32,24 @@ export const GameNav = TabNavigator(
         }
     }
 );
+
+export const NewGroupNav = StackNavigator({
+    // TODO change the order after implementing next button like back button
+    GroupDetails: {
+        screen: NewGroupDetailsScreen,
+        navigationOptions: {
+            title: "Group Details",
+            headerStyle
+        }
+    },
+    GroupMembers: {
+        screen: NewGroupMembersScreen,
+        navigationOptions: {
+            title: "Add Members",
+            headerStyle
+        }
+    }
+});
 
 export const SignedOut = StackNavigator({
     SignIn: {
@@ -65,10 +84,10 @@ export const SignedIn = StackNavigator(
             }
         },
         NewGroup: {
-            screen: NewGroupScreen,
-            navigationOptions: ({navigation}) => ({
-                header: <MainHeader navigation = {navigation} />
-            })
+            screen: NewGroupNav,
+            navigationOptions: {
+                header: null,
+            }
         },
         Game: {
             screen: GameNav,

@@ -42,21 +42,15 @@ export default class GroupsScreen extends React.Component {
         return (
             <View>
                 <View style={styles.linksRow}>
-                    <TouchableOpacity style={{marginLeft: 10}} activeOpacity={.5} onPress={() => {
+                    <TouchableOpacity activeOpacity={.5} onPress={() => {
                         this.props.navigation.navigate("NewGroup")
                     }}>
-                        <View style={{flexDirection: "row"}}>
-                            <Icon name="plus" size={15} color="#0000ff"/>
-                            <Text style={styles.linkText}>New Group</Text>
-                        </View>
+                        <Text style={styles.linkText}>New Group</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{marginRight: 10}} activeOpacity={.5} onPress={() => {
+                    <TouchableOpacity activeOpacity={.5} onPress={() => {
                         this.props.navigation.navigate("NewGroup");
                     }}>
-                        <View style={{flexDirection: "row"}}>
-                            <Icon name="plus" size={15} color="#0000ff"/>
-                            <Text style={styles.linkText}>Join Group</Text>
-                        </View>
+                        <Text style={styles.linkText}>Join Group</Text>
                     </TouchableOpacity>
                 </View>
                 {this.state.groups &&

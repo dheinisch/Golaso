@@ -45,6 +45,7 @@ export default class SignInScreen extends React.Component {
                         secureTextEntry={true}
                         onChangeText={(confirmPassword) => this.setState({confirmPassword: confirmPassword})}
                     />
+
                     <Button
                         buttonStyle={{ marginTop: 20 }}
                         backgroundColor="#03A9F4"
