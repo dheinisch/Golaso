@@ -1,7 +1,6 @@
 import React from 'react';
 import Contacts from 'react-native-contacts';
-import styles from '../../components/Styles';
-import {Image, Text, View, ListView} from "react-native";
+import {Image, Text, View, ListView, StyleSheet, TouchableOpacity} from "react-native";
 import {CheckBox, SearchBar} from "react-native-elements";
 import firebase from 'react-native-firebase';
 
@@ -39,26 +38,56 @@ export default class NewGroupScreen extends React.Component {
     }
 
     render() {
-        return (
-            <View>
-                <SearchBar
-                    ref={search => this.search = search}
-                    round
-                    onChangeText={(query) => this.onSearch(query)}
-                    onClearText={() => this.onSearch(null)}
-                    placeholder='Type Here...' />
-                {this.renderSelected()}
-                {this.state.dataSource &&
-                    <View style={{marginTop: 5}}>
-                        <ListView
-                            initialListSize={5}
-                            enableEmptySections={true}
-                            dataSource={this.state.dataSource}
-                            renderRow={(contact) => {
-                                return this.renderGroupRow(contact)
-                            }}/>
-                    </View>
+        let selected = [];
+        if (this.state.contacts) {
+            this.state.contacts.forEach((val) => {
+                if (val.selected) {
+                    selected.push(val);
                 }
+            });
+        }
+
+        let isNextDisabled = selected.length === 0;
+
+        return (
+            <View style={styles.mainContainer}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.leftHeaderContainer}>
+                        <TouchableOpacity style={{ marginLeft: 10, marginTop: 20 }} activeOpacity={.5} onPress={() => this.props.navigation.goBack(null)}>
+                            <Text style={styles.linkText}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.rightHeaderContainer}>
+                        <TouchableOpacity disabled={isNextDisabled} style={{ marginRight: 10, marginTop: 20 }} activeOpacity={.5} onPress={() => {
+                            !isNextDisabled && this.props.navigation.navigate("GroupDetails")
+                        }}>
+                            <Text style={styles.linkText}>Next</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{ flex: 12 }}>
+                    <SearchBar
+                        ref={search => this.search = search}
+                        lightTheme
+                        round
+                        onChangeText={(query) => this.onSearch(query)}
+                        onClearText={() => this.onSearch(null)}
+                        placeholder='Type Here...' />
+                    <View style={{ flexDirection: "row"}}>
+                        {this.renderSelected(selected)}
+                    </View>
+                {this.state.dataSource &&
+                        <View style={{marginTop: 5}}>
+                            <ListView
+                                initialListSize={5}
+                                enableEmptySections={true}
+                                dataSource={this.state.dataSource}
+                                renderRow={(contact) => {
+                                    return this.renderGroupRow(contact)
+                                }}/>
+                        </View>
+                    }
+                </View>
             </View>
         )
     }
@@ -82,9 +111,9 @@ export default class NewGroupScreen extends React.Component {
                             }
                         </View>
                     </View>
-                    <View style={styles.callerDetailsContainer}>
-                        <View style={styles.callerDetailsContainerWrap}>
-                            <View style={styles.nameContainer}>
+                    <View style={styles.contactContainer}>
+                        <View style={styles.contactDetailsContainerWrap}>
+                            <View style={styles.contactNameContainer}>
                                 <Text style={{fontWeight: '600'}}>{contact.givenName}</Text>
                                 <View style={styles.dateContainer}>
                                     <Text style={{fontWeight: '400', color: '#666', fontSize: 12}}>{contactEmail}</Text>
@@ -153,8 +182,104 @@ export default class NewGroupScreen extends React.Component {
         this.setState({dataSource: newDataSource});
     }
 
-    renderSelected() {
-        // TODO - render thumbnails with selected contacts
+    renderSelected(selected) {
+        return selected.map(val => {
+            return (
+                    <View style={{
+                        backgroundColor: "transparent",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        alignSelf: "center",
+                        margin: 15,
+                    }}>
+                        {val.hasThumbnail &&
+                            <Image source={{uri: val.thumbnailPath}} style={{ borderRadius: 20, width: 40, height: 40, }}/>
+                        }
+                        {!val.hasThumbnail &&
+                            <Image source={blankPerson} style={{ borderRadius: 20, width: 40, height: 40, }}/>
+                        }
+                        {/* TODO - align the givenName in single row with 3 dots in case the user length is more than X */}
+                        {val.givenName.length > 5 &&
+                            <Text>{val.givenName.substring(0, 5) + "..."}</Text>
+                        }
+                        {val.givenName.length <= 5 &&
+                            <Text>{val.givenName}</Text>
+                        }
+                    </View>
+            )});
     }
 }
 
+styles = StyleSheet.create({
+    linksRow: {
+        backgroundColor: "transparent",
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        borderBottomColor: "rgba(92,94,94,0.5)",
+        borderBottomWidth: 0.25,
+        padding: 8
+    },
+    linkText: {
+        color: "#0000ff",
+        marginLeft: 5,
+    },
+    mainContainer: {
+        flex: 1,
+        backgroundColor: '#F5FCFF',
+        height: 24
+    },
+    headerContainer: {
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "#e1e8ee",
+        alignItems:"center",
+        paddingRight: 5
+    },
+    leftHeaderContainer: {
+        alignItems: "flex-start",
+        flexDirection: "row"
+    },
+    rightHeaderContainer: {
+        alignItems: "flex-end",
+        flexDirection: "row"
+    },
+    contentContainer: {
+        flex: 6,
+    },
+    listItemContainer: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 5
+    },
+    contactContainer: {
+        flex: 4,
+        justifyContent: "center",
+        borderBottomColor: "rgba(92,94,94,0.5)",
+        borderBottomWidth: 0.25
+    },
+    contactDetailsContainerWrap: {
+        flex: 1,
+        alignItems: "center",
+        flexDirection: "row"
+    },
+    contactNameContainer: {
+        marginLeft: 10,
+        alignItems: "flex-start",
+        flex: 1
+    },
+    dateContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    initStyle: {
+        borderRadius: 30,
+        width: 60,
+        height: 60,
+    },
+});

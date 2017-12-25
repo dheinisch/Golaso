@@ -32,12 +32,11 @@ export const GameNav = TabNavigator(
 );
 
 export const NewGroupNav = StackNavigator({
-    // TODO change the order after implementing next button like back button
-        GroupDetails: {
-            screen: NewGroupDetailsScreen,
-        },
         GroupMembers: {
             screen: NewGroupMembersScreen,
+        },
+        GroupDetails: {
+            screen: NewGroupDetailsScreen,
         }
     },
     {

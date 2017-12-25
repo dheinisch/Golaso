@@ -86,9 +86,9 @@ export default class GroupsScreen extends React.Component {
                     <View style={styles.iconContainer}>
                         <Image source={trophyImage} style={styles.initStyle} resizeMode='contain'/>
                     </View>
-                    <View style={styles.callerDetailsContainer}>
-                        <View style={styles.callerDetailsContainerWrap}>
-                            <View style={styles.nameContainer}>
+                    <View style={styles.contactDetailsContainer}>
+                        <View style={styles.contactDetailsContainerWrap}>
+                            <View style={styles.contactNameContainer}>
                                 <Text style={{fontWeight: '600'}}>{group}</Text>
                                 <View style={styles.dateContainer}>
                                     <Text style={{fontWeight: '400', color: '#666', fontSize: 12}}>Leader is Dor with 40 pts</Text>

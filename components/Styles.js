@@ -51,18 +51,18 @@ export default styles = StyleSheet.create({
         alignItems: "center",
         padding: 5
     },
-    callerDetailsContainer: {
+    contactDetailsContainer: {
         flex: 4,
         justifyContent: "center",
         borderBottomColor: "rgba(92,94,94,0.5)",
         borderBottomWidth: 0.25
     },
-    callerDetailsContainerWrap: {
+    contactDetailsContainerWrap: {
         flex: 1,
         alignItems: "center",
         flexDirection: "row"
     },
-    nameContainer: {
+    contactNameContainer: {
         marginLeft: 10,
         alignItems: "flex-start",
         flex: 1
